@@ -1,26 +1,26 @@
 # HuvleAdKnowva_SDK_android
 
-## 애드노바 (adknowva) Install Guide
+## Adknowva Install Guide
 
-애드노바(adknowva)의 연동 방식은 Gradle을 이용한 방법으로 샘플 예제를 이용해 간단하게 연동이 가능합니다.
-아래 가이드 문서 내용은 본 문서 적용가이드의 **"모든 애드노바 샘플 프로젝트 다운로드"** 하시면 모든 내용을 보실 수 있습니다.
-연동시 애드노바(adknowva) 최신버전을 확인해 주세요. 현재 최신버전은 **1.2.2** 버전입니다.
-
-- [English ver.](guide/guide_EN.md)
-
-## 제휴 신청
-허블 애드노바(AdKnowva) SDK 제휴 방법은 https://www.huvleview.com/doc/contact.php 에 절차를 안내 드리고 있습니다.
+AdKnowva has an integration method based on Gradle. Plus, we supply sample application, thus you may easily integrate our service through those examples. 
+You can check full contents of guide documents by downloading the files from the **“Download All AdKnowva Sample Projects”** menu below. 
+Currently, the latest version is **1.2.2**.
 
 
-### 적용가이드
-- Usages 를 참고하시거나 아래 샘플 프로젝트를 참고해주세요.
-- [모든 애드노바 샘플 프로젝트 다운로드](https://github.com/wootaeng/HuvleAdKnowva_SDK_android/archive/main.zip)    
--> 애드노바(adknowva) 및 애드노바(adknowva) + 구글 ADMOB + HuvleSDK 연동예제 
+
+## Affiliate Application
+We will help you know how to affiliate with AdKnowva please visit this URL. https://www.huvleview.com/doc/contact.php
+
+
+### Integration Guide
+- Please refer to Usages or the sample project below.
+- [Download All AdKnowva Sample Projects](https://github.com/wootaeng/HuvleAdKnowva_SDK_android/archive/main.zip)    
+-> adknowva / adknowva + Google ADMOB + HuvleSDK  
 
 
 ## Usages
 ### 1. Manifest
-- networkSecurityConfig 추가(Android 10(API 레벨 29) 이상을 타켓팅하는 경우 requestLegacyExternalStorage추가)
+- Add networkSecurityConfig (If you target Android 10(API level 29) or higher, please add requestLegacyExternalStorage)
 ```
 <uses-permission android:name="android.permission.INTERNET" />
 
@@ -35,8 +35,8 @@
 	
 ```
 
-### 2. SDK 추가
-Huvle Adknowva SDK 를 사용하기 위해서는 gradle에 SDK를 포함한 하위 라이브러리들을 추가해야합니다.
+### 2. Add SDK 
+Please add sub library including SDK into Gradle to use AdKnowva SDK.
 - build.gradle(Project)
 ```
 allprojects {
@@ -77,8 +77,8 @@ dependencies {
 }
 ```
 
-### 3. 앱에 적용하기
-- 광고가 적용될 Activity
+### 3. Apply to your app
+- Activity in which the advertisement will be applied.
 ```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +122,7 @@ private void initBannerView(final BannerAdView bav, String id, int w , int h) {
 
 
 ## License
-Huvle AdKnowva SDK 의 저작권은 (주)허블에 있습니다.
+Huvle Corporation owns the copyright on AdKnowva SDK.
 ```
 Huvle AdKnowva SDK Android
 Copyright 2021-present Huvle Corp.
