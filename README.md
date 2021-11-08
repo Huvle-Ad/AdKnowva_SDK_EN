@@ -1,6 +1,6 @@
-# HuvleAdKnowva_SDK_android
+# AdKnowva_SDK_android
 
-## Adknowva Install Guide         
+## AdKnowva Install Guide         
 #### [Guide(KR)](guide/guide(kor).md)
 
 AdKnowva has an integration method based on Gradle. Plus, we supply sample application, thus you may easily integrate our service through those examples. 
@@ -16,7 +16,7 @@ We will help you know how to affiliate with AdKnowva please visit this URL. http
 ### Integration Guide
 - Please refer to Usages or the sample project below.
 - [Download All AdKnowva Sample Projects](https://github.com/wootaeng/HuvleAdKnowva_SDK_android/archive/main.zip)    
--> adknowva / adknowva + Google ADMOB + HuvleSDK  
+-> AdKnowva / AdKnowva + Google ADMOB + HuvleSDK  
 
 
 ## Usages
@@ -125,7 +125,7 @@ private void initBannerView(final BannerAdView bav, String id, int w , int h) {
 ## License
 Huvle Corporation owns the copyright on AdKnowva SDK.
 ```
-Huvle AdKnowva SDK Android
+AdKnowva SDK Android
 Copyright 2021-present Huvle Corp.
 
 Unauthorized use, modification and redistribution of this software are strongly prohibited.

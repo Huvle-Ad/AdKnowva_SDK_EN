@@ -1,21 +1,21 @@
-# HuvleAdKnowva_SDK_android
+# AdKnowva_SDK_android
 
-## 애드노바 (adknowva) Install Guide
+## 애드노바 (AdKnowva) Install Guide
 
-애드노바(adknowva)의 연동 방식은 Gradle을 이용한 방법으로 샘플 예제를 이용해 간단하게 연동이 가능합니다.
+애드노바(AdKnowva)의 연동 방식은 Gradle을 이용한 방법으로 샘플 예제를 이용해 간단하게 연동이 가능합니다.
 아래 가이드 문서 내용은 본 문서 적용가이드의 **"모든 애드노바 샘플 프로젝트 다운로드"** 하시면 모든 내용을 보실 수 있습니다.
-연동시 애드노바(adknowva) 최신버전을 확인해 주세요. 현재 최신버전은 **1.2.2** 버전입니다.
+연동시 애드노바(AdKnowva) 최신버전을 확인해 주세요. 현재 최신버전은 **1.2.2** 버전입니다.
 
 
 
 ## 제휴 신청
-허블 애드노바(AdKnowva) SDK 제휴 방법은 https://www.huvleview.com/doc/contact.php 에 절차를 안내 드리고 있습니다.
+애드노바(AdKnowva) SDK 제휴 방법은 https://www.huvleview.com/doc/contact.php 에 절차를 안내 드리고 있습니다.
 
 
 ### 적용가이드
 - Usages 를 참고하시거나 아래 샘플 프로젝트를 참고해주세요.
 - [모든 애드노바 샘플 프로젝트 다운로드](https://github.com/wootaeng/HuvleAdKnowva_SDK_android/archive/main.zip)    
--> 애드노바(adknowva) 및 애드노바(adknowva) + 구글 ADMOB + HuvleSDK 연동예제 
+-> 애드노바(AdKnowva) 및 애드노바(AdKnowva) + 구글 ADMOB + HuvleSDK 연동예제 
 
 
 ## Usages
@@ -36,7 +36,7 @@
 ```
 
 ### 2. SDK 추가
-Huvle Adknowva SDK 를 사용하기 위해서는 gradle에 SDK를 포함한 하위 라이브러리들을 추가해야합니다.
+AdKnowva SDK 를 사용하기 위해서는 gradle에 SDK를 포함한 하위 라이브러리들을 추가해야합니다.
 - build.gradle(Project)
 ```
 allprojects {
@@ -122,9 +122,9 @@ private void initBannerView(final BannerAdView bav, String id, int w , int h) {
 
 
 ## License
-Huvle AdKnowva SDK 의 저작권은 (주)허블에 있습니다.
+AdKnowva SDK 의 저작권은 (주)허블에 있습니다.
 ```
-Huvle AdKnowva SDK Android
+AdKnowva SDK Android
 Copyright 2021-present Huvle Corp.
 
 Unauthorized use, modification and redistribution of this software are strongly prohibited.
