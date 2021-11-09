@@ -1,7 +1,7 @@
 # AdKnowva_SDK_android
 
 ## AdKnowva Install Guide         
-#### [Guide(KR)](guide/guide(kor).md)
+
 
 AdKnowva has an integration method based on Gradle. Plus, we supply sample application, thus you may easily integrate our service through those examples. 
 You can check full contents of guide documents by downloading the files from the **“Download All AdKnowva Sample Projects”** menu below. 
