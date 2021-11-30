@@ -15,7 +15,7 @@ We will help you know how to affiliate with AdKnowva please visit this URL. http
 
 ### Integration Guide
 - Please refer to Usages or the sample project below.
-- [Download All AdKnowva Sample Projects](https://github.com/wootaeng/HuvleAdKnowva_SDK_android/archive/main.zip)    
+- [Download All AdKnowva Sample Projects](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/archive/main.zip)    
 -> AdKnowva / AdKnowva + Google ADMOB + HuvleSDK  
 
 
