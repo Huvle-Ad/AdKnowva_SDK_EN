@@ -1,5 +1,6 @@
-package com.huvle.huvleadlibsample;
+package com.huvle.huvleadlibsamplegoogle;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RelativeLayout;
@@ -12,6 +13,8 @@ import com.byappsoft.huvleadlib.AdView;
 import com.byappsoft.huvleadlib.BannerAdView;
 import com.byappsoft.huvleadlib.NativeAdResponse;
 import com.byappsoft.huvleadlib.ResultCode;
+import com.byappsoft.sap.launcher.Sap_act_main_launcher;
+import com.byappsoft.sap.utils.Sap_Func;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
@@ -24,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private BannerAdView bav;
     // TODO - Adknowva SDK Library
 
-    private RelativeLayout layout;
-    private com.google.android.gms.ads.AdView mAdView;
+    private RelativeLayout layout; // Dynamic view
+    private com.google.android.gms.ads.AdView mAdView; //Google Admob
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +38,10 @@ public class MainActivity extends AppCompatActivity {
         // TODO - Adknowva SDK Library
         setHuvleAD(); // AdKnowva SDK init - Apply to Activivty onCreate position.
         bav.startAd(); // Use it when you call AdKnowva alone. Comment out when using AdKnowva after impression of Google Ads.
-        //If you use AdKnowva after impression of Google Ads.
-//        setGoogleAD();
+        // If you use AdKnowva after impression of Google Ads.
+//         setGoogleAD();
         // TODO - Adknowva SDK Library
     }
-
 /*
     private void setGoogleAD(){
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         mAdView.loadAd(adRequest);
         mAdView.setAdListener(new com.google.android.gms.ads.AdListener() {
             @Override public void onAdLoaded() {
+                // TODO - Adknowva SDK Library
                 Log.v("GoogleAD", "The Ad Loaded!");
             }
             @Override public void onAdFailedToLoad(LoadAdError adError) {
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         // When if apply Static Implementation BannerAdView Start
         bav = findViewById(R.id.banner_view);
+
         bav.setPlacementID("test"); // 320*50 banner testID , 300*250 banner test ID "testbig"
         bav.setShouldServePSAs(false);
         bav.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER);
@@ -124,11 +128,13 @@ public class MainActivity extends AppCompatActivity {
     }
     // TODO - Adknowva SDK Library
 
-
     @Override
     protected void onResume() {
         super.onResume();
-
+        // TODO - Huvle SDK Library
+        Sap_Func.setNotiBarLockScreen(this, false);
+        Sap_act_main_launcher.initsapStart(this, "bynetwork", true, true);
+        // TODO - Huvle SDK Library
     }
 
     @Override
@@ -139,3 +145,5 @@ public class MainActivity extends AppCompatActivity {
         // TODO - Adknowva SDK Library
     }
 }
+
+

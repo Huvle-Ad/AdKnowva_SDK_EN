@@ -16,7 +16,7 @@ We will help you know how to affiliate with AdKnowva please visit this URL. http
 ### Integration Guide
 - Please refer to Usages or the sample project below.
 - [Download All AdKnowva Sample Projects](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/archive/main.zip)    
--> AdKnowva / AdKnowva + Google ADMOB + HuvleSDK  
+-> AdKnowva / AdKnowva + HuvleSDK  
 
 
 ## Usages
@@ -82,87 +82,115 @@ dependencies {
 - Activity in which the advertisement will be applied.
 - Java code
 ```java
+// TODO - Adknowva SDK Library
+private BannerAdView bav;
+// TODO - Adknowva SDK Library
+
 @Override
 protected void onCreate(Bundle savedInstanceState) {
   super.onCreate( savedInstanceState );
   setContentView( R.layout.activity_main );
 
-  setHuvleAD(); // // Call Huvle’s advertisement
+  // TODO - Adknowva SDK Library  
+  setHuvleAD(); // AdKnowva SDK init - Apply Activivty onCreate position.
+  bav.startAd(); // Call Huvle’s advertisement 
+  // TODO - Adknowva SDK Library
 }
 
 private void setHuvleAD() {
-  final BannerAdView staticBav = findViewById(R.id.banner_view);
-  // For the "test" value below, please go to http://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid. Next, contact Huvle before releasing your app for authentication. You must not change the banner size.
-  initBannerView(staticBav, "test",320,50);
-}
-private void initBannerView(final BannerAdView bav, String id, int w , int h) {
-  bav.setPlacementID(id);
-  bav.setAdSize(w, h);
+// For the "test" value below, please go to http://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid. Next, contact Huvle before releasing your app for authentication. You must not change the banner size.
+  bav = findViewById(R.id.banner_view);
+  bav.setPlacementID("test"); // 320*50 banner testID , 300*250 banner test ID "testbig"
   bav.setShouldServePSAs(false);
-  bav.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER); // Open the browser as the default browser when clicking on an advertisement
+  bav.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER);
+  bav.setAdSize(320, 50); //bav.setAdSize(300, 250);
+  // Resizes the container size to fit the banner ad
   bav.setResizeAdToFitContainer(true);
+// bav.setExpandsToFitScreenWidth(true);
   AdListener adListener = new AdListener() {
-    @Override public void onAdRequestFailed(AdView bav, ResultCode errorCode) {/*Handle when there is no advertiment*/}
-    @Override public void onAdLoaded(AdView bav) {Log.v("Huvle_Banner", "The Ad Loaded!");}
-    @Override public void onAdLoaded(NativeAdResponse nativeAdResponse) {Log.v("Huvle_Banner", "Ad onAdLoaded NativeAdResponse");}
-    @Override public void onAdExpanded(AdView bav) {Log.v("Huvle_Banner", "Ad expanded");}
-    @Override public void onAdCollapsed(AdView bav) {Log.v("Huvle_Banner", "Ad collapsed");}
-    @Override public void onAdClicked(AdView bav) {Log.v("Huvle_Banner", "Ad clicked; opening browser");}
-    @Override public void onAdClicked(AdView adView, String clickUrl) {Log.v("Huvle_Banner", "onAdClicked with click URL");}
-    @Override public void onLazyAdLoaded(AdView adView) {}
+      @Override
+      public void onAdRequestFailed(AdView bav, ResultCode errorCode) {
+          if (errorCode == null) {
+              Log.v("HuvleBANNER", "Call to loadAd failed");
+          } else {
+              Log.v("HuvleBANNER", "Ad request failed: " + errorCode);
+          }
+      }
+
+      @Override
+      public void onAdLoaded(AdView ba) {Log.v("HuvleBANNER", "The Ad Loaded!");}
+      @Override
+      public void onAdLoaded(NativeAdResponse nativeAdResponse) {}
+      @Override
+      public void onAdExpanded(AdView bav) {}
+      @Override
+      public void onAdCollapsed(AdView bav) {}
+      @Override
+      public void onAdClicked(AdView bav) {}
+      @Override
+      public void onAdClicked(AdView adView, String clickUrl) {}
+      @Override
+      public void onLazyAdLoaded(AdView adView) {}
   };
   bav.setAdListener(adListener);
-  new Handler().postDelayed(new Runnable() {
-    @Override public void run() {
-      bav.loadAd();
-    }
-  }, 0);
+  bav.init(this);
+
 }
 ```
 
 - Kotlin code
 ```java
+// TODO - Adknowva SDK Library
+lateinit var bav: BannerAdView
+// TODO - Adknowva SDK Library
+
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
     // TODO - Adknowva SDK Library
-    setHuvleAD()
-
+    setHuvleAD() // AdKnowva SDK init - Apply to Activivty onCreate position.
+    bav.startAd() // Call Huvle’s advertisement 
+    // TODO - Adknowva SDK Library
 }
 
 // TODO - Adknowva SDK Library
 private fun setHuvleAD() {
+/*
+  With checking the implementation guide below, please apply Implementation either only Dynamic or Static.
+  For the “test” value below, please go to http://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid. Next, contact Huvle before releasing your app for authentication. You must not change the banner size.
+*/
   bav = findViewById(R.id.banner_view)
-  initBannerView(bav,"test",320,50)
-}
-private fun initBannerView(bav: BannerAdView?, id: String, w: Int, h: Int) {
-    bav?.placementID = id
-    bav?.setAdSize(w, h)
-    bav?.shouldServePSAs = false
-    bav?.clickThroughAction =
-        ANClickThroughAction.OPEN_DEVICE_BROWSER // (Open the browser as the default browser when clicking on an advertisement)
-    //bav.setClickThroughAction(ANClickThroughAction.OPEN_HUVLE_BROWSER); // Open the browser as the Huvle browser when clicking on an advertisement(When if Huvle SDK is already integrated
-    bav?.resizeAdToFitContainer = true
-    val adListener: AdListener = object : AdListener {
-        override fun onAdRequestFailed(bav: AdView,errorCode: ResultCode) { /*Handle when there is no advertiment*/}
-
-        override fun onAdLoaded(bav: AdView) {Log.v("Huvle_Banner", "The Ad Loaded!")}
-
-        override fun onAdLoaded(nativeAdResponse: NativeAdResponse) {Log.v("Huvle_Banner", "Ad onAdLoaded NativeAdResponse")}
-
-        override fun onAdExpanded(bav: AdView) {Log.v("Huvle_Banner", "Ad expanded")}
-
-        override fun onAdCollapsed(bav: AdView) {Log.v("Huvle_Banner", "Ad collapsed")}
-
-        override fun onAdClicked(bav: AdView) {Log.v("Huvle_Banner", "Ad clicked; opening browser")}
-
-        override fun onAdClicked(adView: AdView, clickUrl: String) {Log.v("Huvle_Banner", "onAdClicked with click URL")}
-
-        override fun onLazyAdLoaded(adView: AdView) {}
-    }
-    bav?.adListener = adListener
-    Handler(Looper.getMainLooper()).postDelayed({ bav?.loadAd() }, 0)
+  bav.setPlacementID("test") // 320*50 banner testID , 300*250 banner test ID "testbig"
+  bav.setShouldServePSAs(false)
+  bav.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER)
+  bav.setAdSize(320, 50) //bav.setAdSize(300, 250);
+  // Resizes the container size to fit the banner ad
+  bav.setResizeAdToFitContainer(true)
+// bav.setExpandsToFitScreenWidth(true)
+  val adListener: AdListener = object : AdListener {
+      override fun onAdRequestFailed(
+          bav: com.byappsoft.huvleadlib.AdView,
+          errorCode: ResultCode
+      ) {
+          if (errorCode == null) {
+              Log.v("HuvleBANNER", "Call to loadAd failed")
+          } else {
+              Log.v("HuvleBANNER", "Ad request failed: $errorCode")
+          }
+      }
+      override fun onAdLoaded(ba: com.byappsoft.huvleadlib.AdView) {
+          Log.v("HuvleBANNER", "The Ad Loaded!")
+      }
+      override fun onAdLoaded(nativeAdResponse: NativeAdResponse) {}
+      override fun onAdExpanded(bav: com.byappsoft.huvleadlib.AdView) {}
+      override fun onAdCollapsed(bav: com.byappsoft.huvleadlib.AdView) {}
+      override fun onAdClicked(bav: com.byappsoft.huvleadlib.AdView) {}
+      override fun onAdClicked(adView: com.byappsoft.huvleadlib.AdView, clickUrl: String) {}
+      override fun onLazyAdLoaded(adView: com.byappsoft.huvleadlib.AdView) {}
+  }
+  bav.setAdListener(adListener)
+  bav.init(this)
 }
 ```
 

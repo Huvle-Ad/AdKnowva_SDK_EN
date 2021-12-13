@@ -2,103 +2,124 @@ package com.example.adknowvasample_kotlin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.view.View
 import android.widget.RelativeLayout
 import com.byappsoft.huvleadlib.*
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 
 class MainActivity : AppCompatActivity() {
 
-    private var bav: BannerAdView? = null
+    // TODO - Adknowva SDK Library
+    lateinit var bav: BannerAdView
+    // TODO - Adknowva SDK Library
+
+    private var layout : RelativeLayout? = null
+    lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // TODO - Adknowva SDK Library
-        setHuvleAD()
-
+        setHuvleAD() // AdKnowva SDK init - Apply to Activivty onCreate position.
+        bav.startAd() // Use it when you call AdKnowva alone. Comment out when using AdKnowva after impression of Google Ads.
+        // If you use AdKnowva after impression of Google Ads.
+//        setGoogleAD()
+        // TODO - Adknowva SDK Library
     }
+
+/*
+   private fun setGoogleAD(){
+        MobileAds.initialize(this) {}
+
+        mAdView = findViewById(R.id.gadView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+        mAdView.adListener = object: com.google.android.gms.ads.AdListener() {
+            override fun onAdLoaded() {
+                }
+                Log.v("GoogleAD", "The Ad Loaded!")
+            }
+            override fun onAdFailedToLoad(adError : LoadAdError) {
+                // TODO - Adknowva SDK Library
+                bav.startAd()
+                }
+                // TODO - Adknowva SDK Library
+                Log.v("GoogleAD", "The Ad failed!")
+            }
+            override fun onAdOpened() {}
+            override fun onAdClicked() {}
+            override fun onAdClosed() {}
+        }
+    }
+*/
 
     // TODO - Adknowva SDK Library
     private fun setHuvleAD() {
         /*
-            정적 구현부와 동적구현부는 참고하시어 하나만 적용하시기 바랍니다.(With checking the implementation guide below, please apply Implementation either only Dynamic or Static.)
-            initBannerView 아이디 "test" 값은 http://ssp.huvle.com/ 에서 가입 > 매체생성 > zoneid 입력후 테스트 하시고, release시점에 허블에 문의주시면 인증됩니다. 배너사이즈는 변경하지 마세요.(For the “test” value below, please go to http://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid. Next, contact Huvle before releasing your app for authentication. You must not change the banner size.)
+            With checking the implementation guide below, please apply Implementation either only Dynamic or Static.
+            For the “test” value below, please go to http://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid. Next, contact Huvle before releasing your app for authentication. You must not change the banner size.
         */
-        // 정적으로 구현시(When if apply Dynamic Implementation) BannerAdView Start
-        bav = findViewById(R.id.banner_view)
-        initBannerView(bav,"test",320,50) // 300 * 250 배너 테스트시(Example for testing 300 * 250 banner)  initBannerView(staticBav, "testbig",300,250);
 
-        // 동적으로 구현시(When if apply Static Implementation) BannerAdView Start
-//        val bav = BannerAdView(this)
-//        initBannerView(bav,"test",320,50) // 300 * 250 배너 테스트시 initBannerView(staticBav, "testbig",300,250);
-//        val layout = findViewById<View>(R.id.main_content) as RelativeLayout
+//        // When if apply Dynamic Implementation BannerAdView Start
+//        bav = BannerAdView(this)
+//        layout = findViewById<View>(R.id.adview_container) as RelativeLayout
 //        val layoutParams = RelativeLayout.LayoutParams(
 //            RelativeLayout.LayoutParams.WRAP_CONTENT,
 //            RelativeLayout.LayoutParams.WRAP_CONTENT
 //        )
 //        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
 //        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL)
-//        bav.layoutParams = layoutParams
-//        layout.addView(bav)
-    }
+//        bav!!.layoutParams = layoutParams
+//        layout!!.addView(bav)
 
-    private fun initBannerView(bav: BannerAdView?, id: String, w: Int, h: Int) {
-        bav?.placementID = id
-        bav?.setAdSize(w, h)
-        bav?.shouldServePSAs = false
-        bav?.clickThroughAction =
-            ANClickThroughAction.OPEN_DEVICE_BROWSER // 광고 클릭시 브라우저를 기본브라우저로 Open(Open the browser as the default browser when clicking on an advertisement)
-        //bav.setClickThroughAction(ANClickThroughAction.OPEN_HUVLE_BROWSER); // 광고 클릭시 브라우저를 허블로 Open - 허블 SDK 연동한 업체인경우만(Open the browser as the Huvle browser when clicking on an advertisement(When if Huvle SDK is already integrated))
-        bav?.resizeAdToFitContainer = true
+        // When if apply Dynamic Implementation BannerAdView Start
+        bav = findViewById(R.id.banner_view)
+        bav.setPlacementID("test") // 320*50 banner testID , 300*250 banner test ID "testbig"
+        bav.setShouldServePSAs(false)
+        bav.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER)
+        bav.setAdSize(320, 50) //bav.setAdSize(300, 250);
+        // Resizes the container size to fit the banner ad
+        bav.setResizeAdToFitContainer(true)
+//        bav.setExpandsToFitScreenWidth(true)
         val adListener: AdListener = object : AdListener {
             override fun onAdRequestFailed(
-                bav: AdView,
+                bav: com.byappsoft.huvleadlib.AdView,
                 errorCode: ResultCode
-            ) { /*광고가 없을때 처리(Handle when there is no advertiment)*/
+            ) {
+                if (errorCode == null) {
+                    Log.v("HuvleBANNER", "Call to loadAd failed")
+                } else {
+                    Log.v("HuvleBANNER", "Ad request failed: $errorCode")
+                }
             }
-
-            override fun onAdLoaded(bav: AdView) {
-                Log.v("Huvle_Banner", "The Ad Loaded!")
+            override fun onAdLoaded(ba: com.byappsoft.huvleadlib.AdView) {
+                Log.v("HuvleBANNER", "The Ad Loaded!")
             }
-
-            override fun onAdLoaded(nativeAdResponse: NativeAdResponse) {
-                Log.v("Huvle_Banner", "Ad onAdLoaded NativeAdResponse")
-            }
-
-            override fun onAdExpanded(bav: AdView) {
-                Log.v("Huvle_Banner", "Ad expanded")
-            }
-
-            override fun onAdCollapsed(bav: AdView) {
-                Log.v("Huvle_Banner", "Ad collapsed")
-            }
-
-            override fun onAdClicked(bav: AdView) {
-                Log.v("Huvle_Banner", "Ad clicked; opening browser")
-            }
-
-            override fun onAdClicked(adView: AdView, clickUrl: String) {
-                Log.v("Huvle_Banner", "onAdClicked with click URL")
-            }
-
-            override fun onLazyAdLoaded(adView: AdView) {}
+            override fun onAdLoaded(nativeAdResponse: NativeAdResponse) {}
+            override fun onAdExpanded(bav: com.byappsoft.huvleadlib.AdView) {}
+            override fun onAdCollapsed(bav: com.byappsoft.huvleadlib.AdView) {}
+            override fun onAdClicked(bav: com.byappsoft.huvleadlib.AdView) {}
+            override fun onAdClicked(adView: com.byappsoft.huvleadlib.AdView, clickUrl: String) {}
+            override fun onLazyAdLoaded(adView: com.byappsoft.huvleadlib.AdView) {}
         }
-        bav?.adListener = adListener
-        Handler(Looper.getMainLooper()).postDelayed({ bav?.loadAd() }, 0)
-    }
+        bav.setAdListener(adListener)
+        bav.init(this)
 
+    }
     // TODO - Adknowva SDK Library
+
     override fun onResume() {
         super.onResume()
     }
 
     override fun onDestroy() {
-        bav!!.destroy()
         super.onDestroy()
+        // TODO - Adknowva SDK Library
+        bav.destroy()
+        // TODO - Adknowva SDK Library
     }
 
 }
