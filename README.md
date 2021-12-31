@@ -21,14 +21,13 @@ We will help you know how to affiliate with AdKnowva please visit this URL. http
 
 ## Usages
 ### 1. Manifest
-- Add networkSecurityConfig (If you target Android 10(API level 29) or higher, please add requestLegacyExternalStorage)
+- Add networkSecurityConfig 
 ```
 <uses-permission android:name="android.permission.INTERNET" />
 
 <application
 	.
 	.
-	android:requestLegacyExternalStorage="true"
 	android:networkSecurityConfig="@xml/network"
 	tools:replace="android:networkSecurityConfig"
 	.
@@ -43,7 +42,6 @@ Please add sub library including SDK into Gradle to use AdKnowva SDK.
 allprojects {
     repositories {
         google()
-        jcenter()
         maven {
             name "Huvle"
             url "https://sdk.huvle.com/repository/internal"
