@@ -96,7 +96,11 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 
 private void setHuvleAD() {
-// For the "test" value below, please go to http://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid. Next, contact Huvle before releasing your app for authentication. You must not change the banner size.
+
+// For the "test" value below, 
+// please go to https://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid.
+// Next, contact Huvle before releasing your app for authentication. You must not change the banner size.
+
   bav = findViewById(R.id.banner_view);
   bav.setPlacementID("test"); // 320*50 banner testID , 300*250 banner test ID "testbig"
   bav.setShouldServePSAs(false);
