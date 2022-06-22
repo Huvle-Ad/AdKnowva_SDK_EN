@@ -1,7 +1,9 @@
 package com.huvle.huvleadlibsample;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +12,10 @@ import com.byappsoft.huvleadlib.ANClickThroughAction;
 import com.byappsoft.huvleadlib.AdListener;
 import com.byappsoft.huvleadlib.AdView;
 import com.byappsoft.huvleadlib.BannerAdView;
+import com.byappsoft.huvleadlib.InterstitialAdView;
 import com.byappsoft.huvleadlib.NativeAdResponse;
 import com.byappsoft.huvleadlib.ResultCode;
+import com.byappsoft.huvleadlib.utils.Clog;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
@@ -38,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
         //If you use AdKnowva after impression of Google Ads.
 //        setGoogleAD();
         // TODO - Adknowva SDK Library
+
+        findViewById(R.id.load_iad_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // InterstitialAd sample
+                launchInterstitialAd();
+            }
+        });
+
     }
 
 /*
@@ -71,7 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
  /*
     With checking the implementation guide below, please apply Implementation either only Dynamic or Static.
-    For the “test” value below, please go to http://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid. Next, contact Huvle before releasing your app for authentication. You must not change the banner size.
+    For the “test” value below, please go to http://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid.
+    Next, contact Huvle before releasing your app for authentication.
+    You must not change the banner size.
 */
 
         // When if apply Dynamic Implementation BannerAdView Start
@@ -122,6 +137,169 @@ public class MainActivity extends AppCompatActivity {
         bav.init(this);
 
     }
+
+    //InterstitialAd
+    private void launchInterstitialAd() {
+        final InterstitialAdView iadv = new InterstitialAdView(this);
+        iadv.setBackgroundColor(0xffffffff); // background color
+        iadv.setCloseButtonDelay(10 * 1000);  // Activate close button after 10 seconds
+        //iadv.setCloseButtonDelay(0);        // Activate close button immediately
+        //iadv.setCloseButtonDelay(-1);       // Disable close Button
+/*
+        As for the “testfull” value below, please go to http://ssp.huvle.com/ to sign up > create media > select the 'fullscreen' checkbox > test your app after entering the zoneid corresponding to the 'fullscreen' option.
+        Next, contact Huvle before releasing your app for authentication.
+        You must not change the banner size.
+ */
+        iadv.setPlacementID("testfull"); // zoneId
+        iadv.setShouldServePSAs(false);
+        iadv.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER);
+
+
+        AdListener adListener = new AdListener() {
+            @Override
+            public void onAdRequestFailed(AdView bav, ResultCode errorCode) {
+                if (errorCode == null) {
+                    Log.v("HuvleInterstitialAd", "Call to loadAd failed");
+                } else {
+                    Log.v("HuvleInterstitialAd", "Ad request failed: " + errorCode);
+                }
+            }
+
+            @Override
+            public void onAdLoaded(AdView ba) {
+                Log.v("HuvleInterstitialAd", "The Ad Loaded!");
+                iadv.show();
+            }
+
+            @Override
+            public void onAdLoaded(NativeAdResponse nativeAdResponse) {
+                Log.v("HuvleInterstitialAd", "Ad onAdLoaded NativeAdResponse");
+            }
+
+            @Override
+            public void onAdExpanded(AdView bav) {
+                Log.v("HuvleInterstitialAd", "Ad expanded");
+            }
+
+            @Override
+            public void onAdCollapsed(AdView bav) {
+                Log.v("HuvleInterstitialAd", "Ad collapsed");
+            }
+
+            @Override
+            public void onAdClicked(AdView bav) {
+                Log.v("HuvleInterstitialAd", "Ad clicked; opening browser");
+            }
+
+            @Override
+            public void onAdClicked(AdView adView, String clickUrl) {
+                Log.v("HuvleInterstitialAd", "onAdClicked with click URL");
+            }
+
+            @Override
+            public void onLazyAdLoaded(AdView adView) {
+                Log.v("HuvleInterstitialAd", "onLazyAdLoaded");
+            }
+        };
+        iadv.setAdListener(adListener);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                iadv.loadAd();
+            }
+        }, 0);
+    }
+
+    // backPressed InterstitialAd load
+    @Override
+    public void onBackPressed() {
+        launchBackButtonAd();
+    }
+
+    private void launchBackButtonAd() {
+        final InterstitialAdView badv = new InterstitialAdView(this);
+        bav.setBackgroundColor(0xffffffff);
+
+//        badv.setCloseButtonDelay(10 * 1000);   // Activate close button after 10 seconds
+//        badv.setCloseButtonDelay(0);           // Activate close button immediately
+        badv.setCloseButtonDelay(-1);            // Disable close Button
+
+
+        badv.setPlacementID("testfull"); // backend
+        badv.setShouldServePSAs(false);
+        badv.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER);
+
+        AdListener adListener = new AdListener() {
+            @Override
+            public void onAdRequestFailed(AdView bav, ResultCode errorCode) {
+                if (errorCode == null) {
+                    Log.v("backIAD", "Call to loadAd failed");
+                } else {
+                    Log.v("backIAD", "Ad request failed: " + errorCode);
+                }
+                // end the app if no Ad
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 400);
+            }
+
+            @Override
+            public void onAdLoaded(AdView ba) {
+                Log.v("backIAD", "The Ad Loaded!");
+                badv.show();
+            }
+
+            @Override
+            public void onAdLoaded(NativeAdResponse nativeAdResponse) {
+                Log.v("backIAD", "Ad onAdLoaded NativeAdResponse");
+            }
+
+            @Override
+            public void onAdExpanded(AdView bav) {
+                Clog.v("backIAD", "Ad expanded");
+            }
+
+            @Override
+            public void onAdCollapsed(AdView bav) {
+                Log.v("backIAD", "Ad collapsed");
+                // When ad is closed, the app shuts down
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 400);
+            }
+
+            @Override
+            public void onAdClicked(AdView bav) {
+                Log.v("backIAD", "Ad clicked; opening browser");
+            }
+
+            @Override
+            public void onAdClicked(AdView adView, String clickUrl) {
+                Log.v("backIAD", "onAdClicked with click URL");
+            }
+
+            @Override
+            public void onLazyAdLoaded(AdView adView) {
+                Clog.v("backIAD", "onLazyAdLoaded");
+            }
+        };
+        badv.setAdListener(adListener);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                badv.loadAd();
+            }
+        }, 0);
+    }
+
     // TODO - Adknowva SDK Library
 
 

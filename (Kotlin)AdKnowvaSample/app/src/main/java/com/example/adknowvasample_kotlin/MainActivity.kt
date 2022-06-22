@@ -1,13 +1,15 @@
 package com.example.adknowvasample_kotlin
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.RelativeLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.byappsoft.huvleadlib.*
+import com.byappsoft.huvleadlib.utils.Clog
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +30,12 @@ class MainActivity : AppCompatActivity() {
         // If you use AdKnowva after impression of Google Ads.
 //        setGoogleAD()
         // TODO - Adknowva SDK Library
+
+        findViewById<View>(R.id.load_iad_btn).setOnClickListener {
+            // 전면광고 샘플
+            launchInterstitialAd()
+        }
+
     }
 
 /*
@@ -109,6 +117,132 @@ class MainActivity : AppCompatActivity() {
         bav.init(this)
 
     }
+
+    //InterstitialAd
+    private fun launchInterstitialAd() {
+        val iadv = InterstitialAdView(this)
+        iadv.setBackgroundColor(-0x1) // background color
+        iadv.closeButtonDelay = 10 * 1000 // Activate close button after 10 seconds
+//        iadv.closeButtonDelay = 0         // Activate close button immediately
+//        iadv.closeButtonDelay = -1        // Disable close Button
+
+/*
+        As for the “testfull” value below, please go to http://ssp.huvle.com/ to sign up > create media > select the 'fullscreen' checkbox > test your app after entering the zoneid corresponding to the 'fullscreen' option.
+        Next, contact Huvle before releasing your app for authentication.
+        You must not change the banner size.
+*/
+        iadv.placementID = "testfull" // zoneId
+        iadv.shouldServePSAs = false
+        iadv.clickThroughAction = ANClickThroughAction.OPEN_DEVICE_BROWSER
+        val adListener: AdListener = object : AdListener {
+            override fun onAdRequestFailed(
+                bav: com.byappsoft.huvleadlib.AdView,
+                errorCode: ResultCode
+            ) {
+                if (errorCode == null) {
+                    Log.v("HuvleInterstitialAd", "Call to loadAd failed")
+                } else {
+                    Log.v("HuvleInterstitialAd", "Ad request failed: $errorCode")
+                }
+            }
+
+            override fun onAdLoaded(ba: com.byappsoft.huvleadlib.AdView) {
+                Log.v("HuvleInterstitialAd", "The Ad Loaded!")
+                iadv.show()
+            }
+
+            override fun onAdLoaded(nativeAdResponse: NativeAdResponse) {
+                Log.v("HuvleInterstitialAd", "Ad onAdLoaded NativeAdResponse")
+            }
+
+            override fun onAdExpanded(bav: com.byappsoft.huvleadlib.AdView) {
+                Log.v("HuvleInterstitialAd", "Ad expanded")
+            }
+
+            override fun onAdCollapsed(bav: com.byappsoft.huvleadlib.AdView) {
+                Log.v("HuvleInterstitialAd", "Ad collapsed")
+            }
+
+            override fun onAdClicked(bav: com.byappsoft.huvleadlib.AdView) {
+                Log.v("HuvleInterstitialAd", "Ad clicked; opening browser")
+            }
+
+            override fun onAdClicked(adView: com.byappsoft.huvleadlib.AdView, clickUrl: String) {
+                Log.v("HuvleInterstitialAd", "onAdClicked with click URL")
+            }
+
+            override fun onLazyAdLoaded(adView: com.byappsoft.huvleadlib.AdView) {
+                Log.v("HuvleInterstitialAd", "onLazyAdLoaded")
+            }
+        }
+        iadv.adListener = adListener
+        Handler(Looper.getMainLooper()).postDelayed({ iadv.loadAd() }, 0)
+    }
+
+    // backPressed InterstitialAd load
+    override fun onBackPressed() {
+        launchBackButtonAd()
+    }
+
+    private fun launchBackButtonAd() {
+        val badv = InterstitialAdView(this)
+        bav.setBackgroundColor(-0x1) // background color
+        badv.closeButtonDelay = 10 * 1000 // Activate close button after 10 seconds
+//        badv.closeButtonDelay = 0         // Activate close button immediately
+//        badv.closeButtonDelay = -1        // Disable close Button
+        badv.placementID = "testfull" // backend
+        badv.shouldServePSAs = false
+        badv.clickThroughAction = ANClickThroughAction.OPEN_DEVICE_BROWSER
+        val adListener: AdListener = object : AdListener {
+            override fun onAdRequestFailed(
+                bav: com.byappsoft.huvleadlib.AdView,
+                errorCode: ResultCode
+            ) {
+                if (errorCode == null) {
+                    Log.v("backIAD", "Call to loadAd failed")
+                } else {
+                    Log.v("backIAD", "Ad request failed: $errorCode")
+                }
+                // end the app if no Ad
+                Handler(Looper.getMainLooper()).postDelayed({ finish() }, 400)
+            }
+
+            override fun onAdLoaded(ba: com.byappsoft.huvleadlib.AdView) {
+                Log.v("backIAD", "The Ad Loaded!")
+                badv.show()
+            }
+
+            override fun onAdLoaded(nativeAdResponse: NativeAdResponse) {
+                Log.v("backIAD", "Ad onAdLoaded NativeAdResponse")
+            }
+
+            override fun onAdExpanded(bav: com.byappsoft.huvleadlib.AdView) {
+                Clog.v("backIAD", "Ad expanded")
+            }
+
+            override fun onAdCollapsed(bav: com.byappsoft.huvleadlib.AdView) {
+                Log.v("backIAD", "Ad collapsed")
+                // When ad is closed, the app shuts down
+                Handler(Looper.getMainLooper()).postDelayed({ finish() }, 400)
+            }
+
+            override fun onAdClicked(bav: com.byappsoft.huvleadlib.AdView) {
+                Log.v("backIAD", "Ad clicked; opening browser")
+            }
+
+            override fun onAdClicked(adView: com.byappsoft.huvleadlib.AdView, clickUrl: String) {
+                Log.v("backIAD", "onAdClicked with click URL")
+            }
+
+            override fun onLazyAdLoaded(adView: com.byappsoft.huvleadlib.AdView) {
+                Clog.v("backIAD", "onLazyAdLoaded")
+            }
+        }
+        badv.adListener = adListener
+        Handler(Looper.getMainLooper()).postDelayed({ badv.loadAd() }, 0)
+    }
+
+
     // TODO - Adknowva SDK Library
 
     override fun onResume() {

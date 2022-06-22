@@ -77,6 +77,8 @@ dependencies {
 ```
 
 ### 3. Apply to your app
+
+>#### Banner Ad
 - Activity in which the advertisement will be applied.
 - Java code
 ```java
@@ -194,6 +196,86 @@ private fun setHuvleAD() {
   bav.setAdListener(adListener)
   bav.init(this)
 }
+```
+
+>#### InterstitialAd
++ Please refer to the example sample for full application.
+- Activity in which the advertisement will be applied.
+
+```java
+
+private void launchInterstitialAd() {
+        final InterstitialAdView iadv = new InterstitialAdView(this);
+        iadv.setBackgroundColor(0xffffffff); // background color
+        iadv.setCloseButtonDelay(10 * 1000);  // Activate close button after 10 seconds
+        //iadv.setCloseButtonDelay(0);        // Activate close button immediately
+        //iadv.setCloseButtonDelay(-1);       // Disable close Button
+/*
+        As for the “testfull” value below, please go to http://ssp.huvle.com/ to sign up > create media > select the 'fullscreen' checkbox > test your app after entering the zoneid corresponding to the 'fullscreen' option.
+        Next, contact Huvle before releasing your app for authentication.
+        You must not change the banner size.
+ */
+        iadv.setPlacementID("testfull"); // zoneId
+        iadv.setShouldServePSAs(false);
+        iadv.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER);
+
+
+        AdListener adListener = new AdListener() {
+            @Override
+            public void onAdRequestFailed(AdView bav, ResultCode errorCode) {
+                if (errorCode == null) {
+                    Log.v("HuvleInterstitialAd", "Call to loadAd failed");
+                } else {
+                    Log.v("HuvleInterstitialAd", "Ad request failed: " + errorCode);
+                }
+            }
+
+            @Override
+            public void onAdLoaded(AdView ba) {
+                Log.v("HuvleInterstitialAd", "The Ad Loaded!");
+                iadv.show();
+            }
+
+            @Override
+            public void onAdLoaded(NativeAdResponse nativeAdResponse) {
+                Log.v("HuvleInterstitialAd", "Ad onAdLoaded NativeAdResponse");
+            }
+
+            @Override
+            public void onAdExpanded(AdView bav) {
+                Log.v("HuvleInterstitialAd", "Ad expanded");
+            }
+
+            @Override
+            public void onAdCollapsed(AdView bav) {
+                Log.v("HuvleInterstitialAd", "Ad collapsed");
+            }
+
+            @Override
+            public void onAdClicked(AdView bav) {
+                Log.v("HuvleInterstitialAd", "Ad clicked; opening browser");
+            }
+
+            @Override
+            public void onAdClicked(AdView adView, String clickUrl) {
+                Log.v("HuvleInterstitialAd", "onAdClicked with click URL");
+            }
+
+            @Override
+            public void onLazyAdLoaded(AdView adView) {
+                Log.v("HuvleInterstitialAd", "onLazyAdLoaded");
+            }
+        };
+        iadv.setAdListener(adListener);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                iadv.loadAd();
+            }
+        }, 0);
+    }
+
 ```
 
 
