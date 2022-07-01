@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.byappsoft.huvleadlib.ANClickThroughAction;
 import com.byappsoft.huvleadlib.AdListener;
 import com.byappsoft.huvleadlib.AdView;
+import com.byappsoft.huvleadlib.BackAdListener;
 import com.byappsoft.huvleadlib.BannerAdView;
 import com.byappsoft.huvleadlib.InterstitialAdView;
 import com.byappsoft.huvleadlib.NativeAdResponse;
@@ -228,13 +229,31 @@ public class MainActivity extends AppCompatActivity {
         badv.setCloseButtonDelay(-1);            // Disable close Button
 
 
-        badv.setPlacementID("testfull"); // backend
+        badv.setPlacementID("testfull"); // zoneId
         badv.setShouldServePSAs(false);
         badv.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER);
 
-        AdListener adListener = new AdListener() {
+        AdListener adListener = new BackAdListener() {
             @Override
-            public void onAdRequestFailed(AdView bav, ResultCode errorCode) {
+            public void onBackPressed() {
+                //return to the app
+                Log.v("backIAD", "BackAdListener.onBackPressed()!");
+            }
+
+            @Override
+            public void onAdLoaded(AdView adView) {
+                Log.v("backIAD", "The Ad Loaded!");
+                badv.show();
+
+            }
+
+            @Override
+            public void onAdLoaded(NativeAdResponse nativeAdResponse) {
+                Log.v("backIAD", "Ad onAdLoaded NativeAdResponse");
+            }
+
+            @Override
+            public void onAdRequestFailed(AdView adView, ResultCode errorCode) {
                 if (errorCode == null) {
                     Log.v("backIAD", "Call to loadAd failed");
                 } else {
@@ -250,25 +269,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdLoaded(AdView ba) {
-                Log.v("backIAD", "The Ad Loaded!");
-                badv.show();
+            public void onAdExpanded(AdView adView) {
+                Log.v("backIAD", "Ad expanded");
             }
 
             @Override
-            public void onAdLoaded(NativeAdResponse nativeAdResponse) {
-                Log.v("backIAD", "Ad onAdLoaded NativeAdResponse");
-            }
-
-            @Override
-            public void onAdExpanded(AdView bav) {
-                Clog.v("backIAD", "Ad expanded");
-            }
-
-            @Override
-            public void onAdCollapsed(AdView bav) {
-                Log.v("backIAD", "Ad collapsed");
-                // When ad is closed, the app shuts down
+            public void onAdCollapsed(AdView adView) {
+                // Shut down app when you click the Close button
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -278,12 +285,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onAdClicked(AdView bav) {
+            public void onAdClicked(AdView adView) {
                 Log.v("backIAD", "Ad clicked; opening browser");
             }
 
             @Override
-            public void onAdClicked(AdView adView, String clickUrl) {
+            public void onAdClicked(AdView adView, String s) {
                 Log.v("backIAD", "onAdClicked with click URL");
             }
 
@@ -292,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 Clog.v("backIAD", "onLazyAdLoaded");
             }
         };
+
         badv.setAdListener(adListener);
 
         new Handler().postDelayed(new Runnable() {

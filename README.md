@@ -5,7 +5,7 @@
 
 AdKnowva has an integration method based on Gradle. Plus, we supply sample application, thus you may easily integrate our service through those examples. 
 You can check full contents of guide documents by downloading the files from the **“Download All AdKnowva Sample Projects”** menu below. 
-Currently, the latest version is **1.3.1**.
+Currently, the latest version is **1.4.1**.
 
 
 
@@ -272,6 +272,111 @@ private void launchInterstitialAd() {
             @Override
             public void run() {
                 iadv.loadAd();
+            }
+        }, 0);
+    }
+
+```
+
+>### InterstitialAd_BackButton Setting
++ Please refer to the example sample for full application.
+- Activity in which the advertisement will be applied.
+* use BackAdListener
+
+```java
+
+// backPressed InterstitialAd load
+    @Override
+    public void onBackPressed() {
+        launchBackButtonAd();
+    }
+
+    private void launchBackButtonAd() {
+        final InterstitialAdView badv = new InterstitialAdView(this);
+//        bav.setBackgroundColor(0xffffffff);
+
+        badv.setCloseButtonDelay(10 * 1000);  // Activate close button after 10 seconds
+        //badv.setCloseButtonDelay(0);        // Activate close button immediately
+        //badv.setCloseButtonDelay(-1);       // Disable close Button
+
+
+        badv.setPlacementID("testfull"); //ZoneId
+        badv.setShouldServePSAs(false);
+        badv.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER);
+
+        AdListener adListener = new BackAdListener() {
+            @Override
+            public void onBackPressed() {
+                //return to the app
+                Log.v("backIAD", "BackAdListener.onBackPressed()!");
+            }
+
+            @Override
+            public void onAdLoaded(AdView adView) {
+                Log.v("backIAD", "The Ad Loaded!");
+                badv.show();
+
+            }
+
+            @Override
+            public void onAdLoaded(NativeAdResponse nativeAdResponse) {
+                Log.v("backIAD", "Ad onAdLoaded NativeAdResponse");
+            }
+
+            @Override
+            public void onAdRequestFailed(AdView adView, ResultCode errorCode) {
+                if (errorCode == null) {
+                    Log.v("backIAD", "Call to loadAd failed");
+                } else {
+                    Log.v("backIAD", "Ad request failed: " + errorCode);
+                }
+                // end the app if no Ad
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 400);
+            }
+
+            @Override
+            public void onAdExpanded(AdView adView) {
+                Log.v("backIAD", "Ad expanded");
+            }
+
+            @Override
+            public void onAdCollapsed(AdView adView) {
+                // Shut down app when you click the Close button
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 400);
+            }
+
+            @Override
+            public void onAdClicked(AdView adView) {
+                Log.v("backIAD", "Ad clicked; opening browser");
+            }
+
+            @Override
+            public void onAdClicked(AdView adView, String s) {
+                Log.v("backIAD", "onAdClicked with click URL");
+            }
+
+            @Override
+            public void onLazyAdLoaded(AdView adView) {
+                Clog.v("backIAD", "onLazyAdLoaded");
+            }
+        };
+
+        badv.setAdListener(adListener);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                badv.loadAd();
             }
         }, 0);
     }

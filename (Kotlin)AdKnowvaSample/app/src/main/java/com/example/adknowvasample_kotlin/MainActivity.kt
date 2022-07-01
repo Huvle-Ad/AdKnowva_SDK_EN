@@ -190,12 +190,28 @@ class MainActivity : AppCompatActivity() {
         badv.closeButtonDelay = 10 * 1000 // Activate close button after 10 seconds
 //        badv.closeButtonDelay = 0         // Activate close button immediately
 //        badv.closeButtonDelay = -1        // Disable close Button
-        badv.placementID = "testfull" // backend
+        
+        badv.placementID = "testfull" // zoneId
         badv.shouldServePSAs = false
         badv.clickThroughAction = ANClickThroughAction.OPEN_DEVICE_BROWSER
-        val adListener: AdListener = object : AdListener {
+
+        val adListener: AdListener = object : BackAdListener {
+            override fun onBackPressed() {
+                //return to the app
+                Log.v("backIAD", "BackAdListener.onBackPressed()!")
+            }
+
+            override fun onAdLoaded(adView: com.byappsoft.huvleadlib.AdView) {
+                Log.v("backIAD", "The Ad Loaded!")
+                badv.show()
+            }
+
+            override fun onAdLoaded(nativeAdResponse: NativeAdResponse) {
+                Log.v("backIAD", "Ad onAdLoaded NativeAdResponse")
+            }
+
             override fun onAdRequestFailed(
-                bav: com.byappsoft.huvleadlib.AdView,
+                adView: com.byappsoft.huvleadlib.AdView,
                 errorCode: ResultCode
             ) {
                 if (errorCode == null) {
@@ -207,38 +223,30 @@ class MainActivity : AppCompatActivity() {
                 Handler(Looper.getMainLooper()).postDelayed({ finish() }, 400)
             }
 
-            override fun onAdLoaded(ba: com.byappsoft.huvleadlib.AdView) {
-                Log.v("backIAD", "The Ad Loaded!")
-                badv.show()
+            override fun onAdExpanded(adView: com.byappsoft.huvleadlib.AdView) {
+                Log.v("backIAD", "Ad expanded")
             }
 
-            override fun onAdLoaded(nativeAdResponse: NativeAdResponse) {
-                Log.v("backIAD", "Ad onAdLoaded NativeAdResponse")
-            }
-
-            override fun onAdExpanded(bav: com.byappsoft.huvleadlib.AdView) {
-                Clog.v("backIAD", "Ad expanded")
-            }
-
-            override fun onAdCollapsed(bav: com.byappsoft.huvleadlib.AdView) {
-                Log.v("backIAD", "Ad collapsed")
-                // When ad is closed, the app shuts down
+            override fun onAdCollapsed(adView: com.byappsoft.huvleadlib.AdView) {
+                // Shut down app when you click the Close button
                 Handler(Looper.getMainLooper()).postDelayed({ finish() }, 400)
             }
 
-            override fun onAdClicked(bav: com.byappsoft.huvleadlib.AdView) {
+            override fun onAdClicked(adView: com.byappsoft.huvleadlib.AdView) {
                 Log.v("backIAD", "Ad clicked; opening browser")
             }
 
-            override fun onAdClicked(adView: com.byappsoft.huvleadlib.AdView, clickUrl: String) {
+            override fun onAdClicked(adView: com.byappsoft.huvleadlib.AdView, s: String) {
                 Log.v("backIAD", "onAdClicked with click URL")
             }
 
             override fun onLazyAdLoaded(adView: com.byappsoft.huvleadlib.AdView) {
-                Clog.v("backIAD", "onLazyAdLoaded")
+                Log.v("backIAD", "onLazyAdLoaded")
             }
         }
+
         badv.adListener = adListener
+
         Handler(Looper.getMainLooper()).postDelayed({ badv.loadAd() }, 0)
     }
 
