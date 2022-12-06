@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AdKnowvaSample_Kotlin</string>
+    <!-- You apply get huid  -->
+    <string name="huvle_adtech_id">com.byappsoft.sap."get huid"</string>
 </resources>

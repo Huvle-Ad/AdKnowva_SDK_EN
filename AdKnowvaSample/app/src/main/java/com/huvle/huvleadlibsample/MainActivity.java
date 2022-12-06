@@ -17,7 +17,9 @@ import com.byappsoft.huvleadlib.BannerAdView;
 import com.byappsoft.huvleadlib.InterstitialAdView;
 import com.byappsoft.huvleadlib.NativeAdResponse;
 import com.byappsoft.huvleadlib.ResultCode;
+import com.byappsoft.huvleadlib.SDKSettings;
 import com.byappsoft.huvleadlib.utils.Clog;
+import com.byappsoft.huvleuid.HuidManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
@@ -311,11 +313,25 @@ public class MainActivity extends AppCompatActivity {
     // TODO - Adknowva SDK Library
 
 
+
     @Override
     protected void onResume() {
         super.onResume();
+        // TODO - Huid
+        HuidManager.onResume(this);
+        SDKSettings.onResume(this);
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // TODO - Huid
+        HuidManager.onStop(this);
+        SDKSettings.onStop(this);
+    }
+
+
 
     @Override
     protected void onDestroy() {
