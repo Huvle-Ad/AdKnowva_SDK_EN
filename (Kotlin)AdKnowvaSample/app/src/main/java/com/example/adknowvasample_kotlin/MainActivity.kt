@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
     private fun launchInterstitialAd() {
         val iadv = InterstitialAdView(this)
         iadv.setBackgroundColor(-0x1) // background color
-        iadv.closeButtonDelay = 10 * 1000 // Activate close button after 10 seconds
+        iadv.closeButtonDelay = 3 * 1000 // Activate close button after 3 seconds
 //        iadv.closeButtonDelay = 0         // Activate close button immediately
 //        iadv.closeButtonDelay = -1        // Disable close Button
 
@@ -188,8 +188,8 @@ class MainActivity : AppCompatActivity() {
     private fun launchBackButtonAd() {
         val badv = InterstitialAdView(this)
         bav.setBackgroundColor(-0x1) // background color
-        badv.closeButtonDelay = 10 * 1000 // Activate close button after 10 seconds
-//        badv.closeButtonDelay = 0         // Activate close button immediately
+//        badv.closeButtonDelay = 10 * 1000 // Activate close button after 10 seconds
+        badv.closeButtonDelay = 0         // Activate close button immediately
 //        badv.closeButtonDelay = -1        // Disable close Button
         
         badv.placementID = "testfull" // zoneId
@@ -221,7 +221,7 @@ class MainActivity : AppCompatActivity() {
                     Log.v("backIAD", "Ad request failed: $errorCode")
                 }
                 // end the app if no Ad
-                Handler(Looper.getMainLooper()).postDelayed({ finish() }, 400)
+                Handler(Looper.getMainLooper()).postDelayed({ finish() }, 0)
             }
 
             override fun onAdExpanded(adView: com.byappsoft.huvleadlib.AdView) {
@@ -230,7 +230,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onAdCollapsed(adView: com.byappsoft.huvleadlib.AdView) {
                 // Shut down app when you click the Close button
-                Handler(Looper.getMainLooper()).postDelayed({ finish() }, 400)
+                Handler(Looper.getMainLooper()).postDelayed({ finish() }, 0)
             }
 
             override fun onAdClicked(adView: com.byappsoft.huvleadlib.AdView) {

@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     private void launchInterstitialAd() {
         final InterstitialAdView iadv = new InterstitialAdView(this);
         //bav.setBackgroundColor(0xffffffff); // background color
-        iadv.setCloseButtonDelay(10 * 1000);  // Activate close button after 10 seconds
+        iadv.setCloseButtonDelay(3 * 1000);  // Activate close button after 3 seconds
         //badv.setCloseButtonDelay(0);        // Activate close button immediately
         //iadv.setCloseButtonDelay(-1);       // Disable close Button
 /*
@@ -227,8 +227,8 @@ public class MainActivity extends AppCompatActivity {
 //        bav.setBackgroundColor(0xffffffff);
 
 //        badv.setCloseButtonDelay(10 * 1000);   // Activate close button after 10 seconds
-//        badv.setCloseButtonDelay(0);           // Activate close button immediately
-        badv.setCloseButtonDelay(-1);            // Disable close Button
+        badv.setCloseButtonDelay(0);           // Activate close button immediately
+//        badv.setCloseButtonDelay(-1);            // Disable close Button
 
 
         badv.setPlacementID("testfull"); // zoneId
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         finish();
                     }
-                }, 400);
+                }, 0);
             }
 
             @Override
@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         finish();
                     }
-                }, 400);
+                }, 0);
             }
 
             @Override
