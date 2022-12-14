@@ -8,8 +8,6 @@ import android.view.View
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.byappsoft.huvleadlib.*
-import com.byappsoft.huvleadlib.utils.Clog
-import com.byappsoft.huvleuid.HuidManager
 import com.google.android.gms.ads.AdView
 
 class MainActivity : AppCompatActivity() {
@@ -254,19 +252,6 @@ class MainActivity : AppCompatActivity() {
 
     // TODO - Adknowva SDK Library
 
-    override fun onResume() {
-        super.onResume()
-        // TODO - Huid
-        HuidManager.onResume(this)
-        SDKSettings.onResume(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        // TODO - Huid
-        HuidManager.onStop(this)
-        SDKSettings.onStop(this)
-    }
 
     override fun onDestroy() {
         super.onDestroy()

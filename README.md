@@ -17,7 +17,7 @@ We will help you know how to affiliate with AdKnowva please visit this URL. http
 - Please refer to Usages or the sample project below.
 - [Download All AdKnowva Sample Projects](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/archive/main.zip)    
 -> AdKnowva / AdKnowva + HuvleSDK  
-- [Unitiy Plugin download](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/releases/tag/1.4.3)
+
 
 ## Usages
 ### 1. Manifest
@@ -71,7 +71,6 @@ dependencies {
 	*/
 	implementation 'com.google.android.gms:play-services-ads:20.5.0'
 	implementation 'com.byappsoft.huvleadlib:HuvleAdLib:1.4.3' // Please implement after checking the latest version.
-    implementation 'com.byappsoft.huvleuid:huid:0.0.12'
 	.
 	.
 }
@@ -142,21 +141,6 @@ private void setHuvleAD() {
 
 }
 
-@Override
-protected void onResume() {
-    super.onResume();
-    //- Huid
-    HuidManager.onResume(this);
-    SDKSettings.onResume(this);
-}
-
-@Override
-protected void onStop() {
-    super.onStop();
-    //- Huid
-    HuidManager.onStop(this);
-    SDKSettings.onStop(this);
-}
 
 @Override
 protected void onDestroy() {
@@ -223,19 +207,6 @@ private fun setHuvleAD() {
   bav.init(this)
 }
 
-override fun onResume() {
-    super.onResume()
-    //- Huid
-    HuidManager.onResume(this)
-    SDKSettings.onResume(this)
-}
-
-override fun onStop() {
-    super.onStop()
-    //- Huid
-    HuidManager.onStop(this)
-    SDKSettings.onStop(this)
-}
 
 override fun onDestroy() {
     super.onDestroy()

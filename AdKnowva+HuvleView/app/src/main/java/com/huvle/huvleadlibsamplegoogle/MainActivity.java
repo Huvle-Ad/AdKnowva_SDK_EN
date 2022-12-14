@@ -17,9 +17,7 @@ import com.byappsoft.huvleadlib.BannerAdView;
 import com.byappsoft.huvleadlib.InterstitialAdView;
 import com.byappsoft.huvleadlib.NativeAdResponse;
 import com.byappsoft.huvleadlib.ResultCode;
-import com.byappsoft.huvleadlib.SDKSettings;
 import com.byappsoft.huvleadlib.utils.Clog;
-import com.byappsoft.huvleuid.HuidManager;
 import com.byappsoft.sap.launcher.Sap_act_main_launcher;
 import com.byappsoft.sap.utils.Sap_Func;
 import com.google.android.gms.ads.AdRequest;
@@ -319,11 +317,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // TODO- Huid
-        HuidManager.onResume(this);
-        SDKSettings.onResume(this);
-        Sap_act_main_launcher.onResume(this);
-        // TODO- Huid
 
         // TODO - Huvle SDK Library
         Sap_Func.setNotiBarLockScreen(this, false);
@@ -331,15 +324,6 @@ public class MainActivity extends AppCompatActivity {
         // TODO - Huvle SDK Library
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        // TODO- Huid
-        HuidManager.onStop(this);
-        SDKSettings.onStop(this);
-        Sap_act_main_launcher.onStop(this);
-        // TODO- Huid
-    }
 
     @Override
     protected void onDestroy() {
