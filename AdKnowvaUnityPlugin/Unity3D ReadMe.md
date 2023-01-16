@@ -14,7 +14,7 @@
 ### 2. Unity Project Package import
 ![img1](./img/img1.png)
 
-### 3. Hierachy 에 HuvleSDKObject 생성
+### 3. Create HuvleSDKObject on Hierachy
 
 1. Click [+] on Hierarchy panel
 2. Click [Create Empty]
