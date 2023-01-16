@@ -17,6 +17,7 @@ We will help you know how to affiliate with AdKnowva please visit this URL. http
 - Please refer to Usages or the sample project below.
 - [Download All AdKnowva Sample Projects](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/archive/main.zip)    
 -> AdKnowva / AdKnowva + HuvleSDK  
+- [Unity Plugin](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/releases/tag/1.5.0)
 
 
 ## Usages
