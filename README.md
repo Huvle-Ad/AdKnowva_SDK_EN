@@ -94,7 +94,6 @@ protected void onCreate(Bundle savedInstanceState) {
 
   // TODO - Adknowva SDK Library  
   setHuvleAD(); // AdKnowva SDK init - Apply Activivty onCreate position.
-  bav.startAd(); // Call Huvle’s advertisement 
   // TODO - Adknowva SDK Library
 }
 
@@ -139,6 +138,7 @@ private void setHuvleAD() {
   };
   bav.setAdListener(adListener);
   bav.init(this);
+  bav.startAd();
 
 }
 
@@ -165,7 +165,6 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
     // TODO - Adknowva SDK Library
     setHuvleAD() // AdKnowva SDK init - Apply to Activivty onCreate position.
-    bav.startAd() // Call Huvle’s advertisement 
     // TODO - Adknowva SDK Library
 }
 
@@ -206,6 +205,7 @@ private fun setHuvleAD() {
   }
   bav.setAdListener(adListener)
   bav.init(this)
+  bav.startAd()
 }
 
 
@@ -285,13 +285,7 @@ private void launchInterstitialAd() {
             }
         };
         iadv.setAdListener(adListener);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                iadv.loadAd();
-            }
-        }, 0);
+        iadv.loadAd();
     }
 
 ```
@@ -349,12 +343,7 @@ private void launchInterstitialAd() {
                     Log.v("backIAD", "Ad request failed: " + errorCode);
                 }
                 // end the app if no Ad
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 400);
+                finish();
             }
 
             @Override
@@ -365,12 +354,7 @@ private void launchInterstitialAd() {
             @Override
             public void onAdCollapsed(AdView adView) {
                 // Shut down app when you click the Close button
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 400);
+                finish();
             }
 
             @Override
@@ -390,13 +374,7 @@ private void launchInterstitialAd() {
         };
 
         badv.setAdListener(adListener);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                badv.loadAd();
-            }
-        }, 0);
+        badv.loadAd();
     }
 
 ```
