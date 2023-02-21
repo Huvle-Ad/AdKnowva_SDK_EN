@@ -1,4 +1,4 @@
-package com.huvle.huvleadlibsample;
+package com.huvle.adknowvahuvleview;
 
 import org.junit.Test;
 

@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.byappsoft.huvleadlib.*
-import com.google.android.gms.ads.AdView
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +16,6 @@ class MainActivity : AppCompatActivity() {
     // TODO - Adknowva SDK Library
 
     private var layout : RelativeLayout? = null
-    lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +23,6 @@ class MainActivity : AppCompatActivity() {
 
         // TODO - Adknowva SDK Library
         setHuvleAD() // AdKnowva SDK init - Apply to Activivty onCreate position.
-        bav.startAd() // Use it when you call AdKnowva alone. Comment out when using AdKnowva after impression of Google Ads.
-        // If you use AdKnowva after impression of Google Ads.
-//        setGoogleAD()
         // TODO - Adknowva SDK Library
 
         findViewById<View>(R.id.load_iad_btn).setOnClickListener {
@@ -37,31 +32,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-/*
-   private fun setGoogleAD(){
-        MobileAds.initialize(this) {}
-
-        mAdView = findViewById(R.id.gadView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
-        mAdView.adListener = object: com.google.android.gms.ads.AdListener() {
-            override fun onAdLoaded() {
-                }
-                Log.v("GoogleAD", "The Ad Loaded!")
-            }
-            override fun onAdFailedToLoad(adError : LoadAdError) {
-                // TODO - Adknowva SDK Library
-                bav.startAd()
-                }
-                // TODO - Adknowva SDK Library
-                Log.v("GoogleAD", "The Ad failed!")
-            }
-            override fun onAdOpened() {}
-            override fun onAdClicked() {}
-            override fun onAdClosed() {}
-        }
-    }
-*/
 
     // TODO - Adknowva SDK Library
     private fun setHuvleAD() {
@@ -114,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         }
         bav.setAdListener(adListener)
         bav.init(this)
-
+        bav.startAd()
     }
 
     //InterstitialAd
@@ -175,7 +145,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         iadv.adListener = adListener
-        Handler(Looper.getMainLooper()).postDelayed({ iadv.loadAd() }, 0)
+        iadv.loadAd()
     }
 
     // backPressed InterstitialAd load
@@ -245,19 +215,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         badv.adListener = adListener
-
-        Handler(Looper.getMainLooper()).postDelayed({ badv.loadAd() }, 0)
+        badv.loadAd()
     }
-
 
     // TODO - Adknowva SDK Library
 
 
     override fun onDestroy() {
-        super.onDestroy()
         // TODO - Adknowva SDK Library
         bav.destroy()
         // TODO - Adknowva SDK Library
+        super.onDestroy()
     }
 
 }

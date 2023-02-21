@@ -1,6 +1,6 @@
-package com.huvle.huvleadlibsamplegoogle;
+package com.huvle.adknowva_sample;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -18,34 +18,18 @@ import com.byappsoft.huvleadlib.InterstitialAdView;
 import com.byappsoft.huvleadlib.NativeAdResponse;
 import com.byappsoft.huvleadlib.ResultCode;
 import com.byappsoft.huvleadlib.utils.Clog;
-import com.byappsoft.sap.launcher.Sap_act_main_launcher;
-import com.byappsoft.sap.utils.Sap_Func;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class MainActivity extends AppCompatActivity {
 
     // TODO - Adknowva SDK Library
     private BannerAdView bav;
     // TODO - Adknowva SDK Library
-
-    private RelativeLayout layout; // Dynamic view
-    private com.google.android.gms.ads.AdView mAdView; //Google Admob
-
+    private RelativeLayout layout;
+    private boolean loadAd = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // TODO - Adknowva SDK Library
-        setHuvleAD(); // AdKnowva SDK init - Apply to Activivty onCreate position.
-        bav.startAd(); // Use it when you call AdKnowva alone. Comment out when using AdKnowva after impression of Google Ads.
-        // If you use AdKnowva after impression of Google Ads.
-//         setGoogleAD();
-        // TODO - Adknowva SDK Library
 
         findViewById(R.id.load_iad_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,43 +39,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
+        findViewById(R.id.banner_stop_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (loadAd) {
+                    loadAd = false;
+                    bav.stopAd();
+                } else {
+                    loadAd = true;
+                    bav.startAd();
+                }
+            }
+        });
+
+        findViewById(R.id.bannerMedi_move).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplication(), MediationSampleActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        /**************************************************************
+                        TODO - Adknowva init
+         ***************************************************************/
+
 /*
-    private void setGoogleAD(){
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override public void onInitializationComplete(InitializationStatus initializationStatus) {}
-        });
-        mAdView = findViewById(R.id.gadView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        mAdView.setAdListener(new com.google.android.gms.ads.AdListener() {
-            @Override public void onAdLoaded() {
-                // TODO - Adknowva SDK Library
-                Log.v("GoogleAD", "The Ad Loaded!");
-            }
-            @Override public void onAdFailedToLoad(LoadAdError adError) {
-                // TODO - Adknowva SDK Library
-                bav.startAd();
-                // TODO - Adknowva SDK Library
-                Log.v("GoogleAD", "The Ad failed!");
-            }
-            @Override public void onAdOpened() {}
-            @Override public void onAdClicked() {}
-            @Override public void onAdClosed() {}
-        });
-    }
-*/
-
-
-    // TODO - Adknowva SDK Library
-    private void setHuvleAD(){
-
- /*
     With checking the implementation guide below, please apply Implementation either only Dynamic or Static.
-    For the “test” value below, please go to http://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid. Next, contact Huvle before releasing your app for authentication. You must not change the banner size.
+    For the “test” value below, please go to http://ssp.huvle.com/ to sign up > create media > Test your app after typing zoneid.
+    Next, contact Huvle before releasing your app for authentication.
+    You must not change the banner size.
 */
 
-        // When if apply Dynamic Implementation BannerAdView Start
+//        When if apply Dynamic Implementation BannerAdView Start
 //        bav = new BannerAdView(this);
 //        layout = (RelativeLayout) findViewById(R.id.adview_container);
 //        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -103,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
         // When if apply Static Implementation BannerAdView Start
         bav = findViewById(R.id.banner_view);
-
         bav.setPlacementID("test"); // 320*50 banner testID , 300*250 banner test ID "testbig"
         bav.setShouldServePSAs(false);
         bav.setClickThroughAction(ANClickThroughAction.OPEN_DEVICE_BROWSER);
@@ -138,15 +117,17 @@ public class MainActivity extends AppCompatActivity {
         };
         bav.setAdListener(adListener);
         bav.init(this);
+        bav.startAd();
 
     }
 
+    // TODO - Adknowva SDK Library
     //InterstitialAd
     private void launchInterstitialAd() {
         final InterstitialAdView iadv = new InterstitialAdView(this);
-        //bav.setBackgroundColor(0xffffffff); // background color
-        iadv.setCloseButtonDelay(3 * 1000);  // Activate close button after 3 seconds
-        //badv.setCloseButtonDelay(0);        // Activate close button immediately
+        iadv.setBackgroundColor(0xffffffff); // background color
+        iadv.setCloseButtonDelay(3 * 1000);  // Activate close button after 10 seconds
+        //iadv.setCloseButtonDelay(0);        // Activate close button immediately
         //iadv.setCloseButtonDelay(-1);       // Disable close Button
 /*
         As for the “testfull” value below, please go to http://ssp.huvle.com/ to sign up > create media > select the 'fullscreen' checkbox > test your app after entering the zoneid corresponding to the 'fullscreen' option.
@@ -205,13 +186,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         iadv.setAdListener(adListener);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                iadv.loadAd();
-            }
-        }, 0);
+        iadv.loadAd();
     }
 
     // backPressed InterstitialAd load
@@ -222,12 +197,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void launchBackButtonAd() {
         final InterstitialAdView badv = new InterstitialAdView(this);
-//        bav.setBackgroundColor(0xffffffff);
+        bav.setBackgroundColor(0xffffffff);
 
-//        badv.setCloseButtonDelay(10 * 1000);   // Activate close button after 10 seconds
-        badv.setCloseButtonDelay(0);           // Activate close button immediately
-//        badv.setCloseButtonDelay(-1);            // Disable close Button
-
+//        badv.setCloseButtonDelay(3 * 1000);  // Activate close button after 3 seconds
+        badv.setCloseButtonDelay(0);        // Activate close button immediately
+        //badv.setCloseButtonDelay(-1);       // Disable close Button
 
         badv.setPlacementID("testfull"); // zoneId
         badv.setShouldServePSAs(false);
@@ -260,12 +234,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.v("backIAD", "Ad request failed: " + errorCode);
                 }
                 // end the app if no Ad
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 0);
+                finish();
             }
 
             @Override
@@ -276,12 +245,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAdCollapsed(AdView adView) {
                 // Shut down app when you click the Close button
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 0);
+                finish();
             }
 
             @Override
@@ -301,37 +265,16 @@ public class MainActivity extends AppCompatActivity {
         };
 
         badv.setAdListener(adListener);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                badv.loadAd();
-            }
-        }, 0);
+        badv.loadAd();
     }
-
-
-
     // TODO - Adknowva SDK Library
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // TODO - Huvle SDK Library
-        Sap_Func.setNotiBarLockScreen(this, false);
-        Sap_act_main_launcher.initsapStart(this, "bynetwork", true, true);
-        // TODO - Huvle SDK Library
-    }
 
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         // TODO - Adknowva SDK Library
         bav.destroy();
         // TODO - Adknowva SDK Library
+        super.onDestroy();
     }
 }
-
-
