@@ -116,8 +116,7 @@ public class MainActivity extends AppCompatActivity {
             public void onLazyAdLoaded(AdView adView) {}
         };
         bav.setAdListener(adListener);
-        bav.init(this);
-        bav.startAd();
+        bav.loadAd();
 
     }
 

@@ -96,8 +96,7 @@ public class MediationSampleActivity extends Activity {
             public void onLazyAdLoaded(AdView adView) {}
         };
         bav.setAdListener(adListener);
-        bav.init(this);
-        bav.startAd();
+        bav.loadAd();
 
     }
 
