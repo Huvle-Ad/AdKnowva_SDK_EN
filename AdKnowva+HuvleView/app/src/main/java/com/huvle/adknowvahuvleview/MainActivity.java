@@ -265,21 +265,40 @@ public class MainActivity extends AppCompatActivity {
     // TODO - Adknowva SDK Library
 
     @Override
+    protected void onPause() {
+        // TODO - Adknowva SDK Library
+        if (bav != null) {
+            bav.activityOnPause();
+        }
+        // TODO - Adknowva SDK Library
+        super.onPause();
+    }
+
+    @Override
     protected void onResume() {
+        // TODO - Adknowva SDK Library
+        if (bav != null) {
+            bav.activityOnResume();
+        }
+        // TODO - Adknowva SDK Library
         super.onResume();
 
         // TODO - Huvle SDK Library
         Sap_Func.setNotiBarLockScreen(this, false);
         Sap_act_main_launcher.initsapStart(this, "bynetwork", true, true);
         // TODO - Huvle SDK Library
+
     }
+
 
     @Override
     protected void onDestroy() {
+        // TODO - Adknowva SDK Library
+        if (bav != null) {
+            bav.destroy();
+        }
+        // TODO - Adknowva SDK Library
         super.onDestroy();
-        // TODO - Adknowva SDK Library
-        bav.destroy();
-        // TODO - Adknowva SDK Library
     }
 }
 

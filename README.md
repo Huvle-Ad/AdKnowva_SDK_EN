@@ -5,7 +5,7 @@
 
 AdKnowva has an integration method based on Gradle. Plus, we supply sample application, thus you may easily integrate our service through those examples. 
 You can check full contents of guide documents by downloading the files from the **“Download All AdKnowva Sample Projects”** menu below. 
-Currently, the latest version is **1.5.0**.
+Currently, the latest version is **1.5.1**.
 
 
 
@@ -25,6 +25,7 @@ We will help you know how to affiliate with AdKnowva please visit this URL. http
 - Add networkSecurityConfig 
 ```
 <uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="com.google.android.gms.permission.AD_ID" /> 
 
 <application
 	.
@@ -71,7 +72,7 @@ dependencies {
 	* adknowva sdk , play-service-ads 
 	*/
 	implementation 'com.google.android.gms:play-services-ads:20.5.0'
-	implementation 'com.byappsoft.huvleadlib:HuvleAdLib:1.5.0' // Please implement after checking the latest version.
+	implementation 'com.byappsoft.huvleadlib:HuvleAdLib:1.5.1' // Please implement after checking the latest version.
 	.
 	.
 }
@@ -143,11 +144,34 @@ private void setHuvleAD() {
 
 
 @Override
+protected void onPause() {
+    // TODO - Adknowva SDK Library
+    if (bav != null) {
+        bav.activityOnPause();
+    }
+    // TODO - Adknowva SDK Library
+    super.onPause();
+}
+
+@Override
+protected void onResume() {
+    // TODO - Adknowva SDK Library
+    if (bav != null) {
+        bav.activityonResume();
+    }
+    // TODO - Adknowva SDK Library
+    super.onResume();
+}
+
+@Override
 protected void onDestroy() {
+    
+    // TODO - Adknowva SDK Library
+    if (bav != null) {
+        bav.destroy();
+    }
+    // TODO - Adknowva SDK Library
     super.onDestroy();
-    // TODO - Adknowva SDK Library
-    bav.destroy();
-    // TODO - Adknowva SDK Library
 }
 
 ```
@@ -207,9 +231,20 @@ private fun setHuvleAD() {
 }
 
 
+override fun onPause() {
+    bav.activityOnPause()
+    super.onPause()
+}
+
+override fun onResume() {
+    bav.activityOnResume()
+    super.onResume()
+}
+
 override fun onDestroy() {
-    super.onDestroy()
     bav.destroy()
+    super.onDestroy()
+    
 }
 
 ```
