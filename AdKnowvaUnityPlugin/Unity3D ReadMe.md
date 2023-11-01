@@ -9,7 +9,7 @@
 ## Unitiy AdKnowvaPlugin Package install
 ## Usage
 ### 1. AdKnowvaUnityPackage and SampleSource download
-- [AdKnowvaUnityPackage](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/releases/tag/1.5.0)
+- [AdKnowvaUnityPackage](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/releases/tag/1.5.1)
 
 ### 2. Unity Project Package import
 ![img1](./img/img1.png)

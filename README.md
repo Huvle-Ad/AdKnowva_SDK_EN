@@ -17,7 +17,7 @@ We will help you know how to affiliate with AdKnowva please visit this URL. http
 - Please refer to Usages or the sample project below.
 - [Download All AdKnowva Sample Projects](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/archive/main.zip)    
 -> AdKnowva / AdKnowva + HuvleSDK  
-- [Unity Plugin](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/releases/tag/1.5.0)
+- [Unity Plugin](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/releases/tag/1.5.1)
 
 
 ## Usages
@@ -71,7 +71,7 @@ dependencies {
 	/**
 	* adknowva sdk , play-service-ads 
 	*/
-	implementation 'com.google.android.gms:play-services-ads:20.5.0'
+	implementation 'com.google.android.gms:play-services-ads:20.6.0' // Please use that version or higher.
 	implementation 'com.byappsoft.huvleadlib:HuvleAdLib:1.5.1' // Please implement after checking the latest version.
 	.
 	.
