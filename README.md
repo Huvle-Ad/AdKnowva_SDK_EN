@@ -5,7 +5,8 @@
 
 AdKnowva has an integration method based on Gradle. Plus, we supply sample application, thus you may easily integrate our service through those examples. 
 You can check full contents of guide documents by downloading the files from the **“Download All AdKnowva Sample Projects”** menu below. 
-Currently, the latest version is **1.5.1**.
+Currently, the latest version is **1.5.3**.
+Android **minSDK 23 / TargetSDK 33**
 
 
 
@@ -17,7 +18,7 @@ We will help you know how to affiliate with AdKnowva please visit this URL. http
 - Please refer to Usages or the sample project below.
 - [Download All AdKnowva Sample Projects](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/archive/main.zip)    
 -> AdKnowva / AdKnowva + HuvleSDK  
-- [Unity Plugin](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/releases/tag/1.5.1)
+- [Unity Plugin](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/releases/tag/1.5.3)
 
 
 ## Usages
@@ -411,17 +412,6 @@ private void launchInterstitialAd() {
     }
 
 ```
-
-### 4. Apply HUID for Advertising Targeting
-- Respnse to Google's policy about the deprecation of 3rd party cookies 
-- HUID function for increasing Ads Target efficiency 
-- You can get and apply **"HUID key"** after SDK alliance progress particularly.
-
-```java
-- res folder - value folder - string.xml add
-<string name="huvle_adtech_id">com.byappsoft.sap."Huid key"</string>
-```
-
 
 
 

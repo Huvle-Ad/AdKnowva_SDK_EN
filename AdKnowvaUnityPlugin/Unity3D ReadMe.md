@@ -3,13 +3,14 @@
 ## Common Requirements
 - Use above Unity 2020.3.25f1
 - Above Google Play Service 20.5.0
-- Android Target API 31
+- Android Target API 33
+- Android minSDK 23
 
 
 ## Unitiy AdKnowvaPlugin Package install
 ## Usage
 ### 1. AdKnowvaUnityPackage and SampleSource download
-- [AdKnowvaUnityPackage](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/releases/tag/1.5.1)
+- [AdKnowvaUnityPackage](https://github.com/Huvle-Ad/AdKnowva_SDK_EN/releases/tag/1.5.3)
 
 ### 2. Unity Project Package import
 ![img1](./img/img1.png)
