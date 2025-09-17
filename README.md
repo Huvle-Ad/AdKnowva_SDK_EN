@@ -5,8 +5,8 @@
 
 AdKnowva has an integration method based on Gradle. Plus, we supply sample application, thus you may easily integrate our service through those examples. 
 You can check full contents of guide documents by downloading the files from the **“Download All AdKnowva Sample Projects”** menu below. 
-Currently, the latest version is **1.5.3**.
-Android **minSDK 23 / TargetSDK 33**
+Currently, the latest version is **1.5.7**.
+Android **minSDK 23 / TargetSDK 35**
 
 
 
@@ -72,8 +72,8 @@ dependencies {
 	/**
 	* adknowva sdk , play-service-ads 
 	*/
-	implementation 'com.google.android.gms:play-services-ads:20.6.0' // Please use that version or higher.
-	implementation 'com.byappsoft.huvleadlib:HuvleAdLib:1.5.1' // Please implement after checking the latest version.
+	implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1' // Please use that version or higher.
+	implementation 'com.byappsoft.huvleadlib:HuvleAdLib:1.5.7' // Please implement after checking the latest version.
 	.
 	.
 }
